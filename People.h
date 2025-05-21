@@ -5,7 +5,9 @@
 #include <locale> // библиотека для задач, связанных с локализацией
 #include <Windows.h> // библиотека Windows API
 #include <cstdlib>//библиотека, содержащая в себе функции преобразования типов
+#include <string>
 using namespace std; //подключение стандартного пространства имен
+
 
 class People //создание переменных-полей, в которых будут хранится данные о работниках организации
 {
@@ -30,28 +32,53 @@ public:
 		cout << line << line << line << endl << line << line << line;
 	};
 	void load() { // функция чтения данных из файла 
-		char temp[200];
+		// Первый проход: подсчет строк
 		num_people = 0;
 		ifstream file("people.txt");
-		while (!file.eof())
-		{
-			file.getline(temp, 200);
-			num_people++;
-		} // подсчет строк в файле people.txt
-		file.close();
-		ppl = new People[num_people]; // создание динамического массива
-		ifstream fin("people.txt");
-		for (int i = 0; i < num_people; i++) // запись данных в переменные
-		{
-			fin >> ppl[i].num;
-			fin >> ppl[i].name;
-			fin >> ppl[i].firstname;
-			fin >> ppl[i].date_hiring;
-			fin >> ppl[i].date_firing;
-			fin >> ppl[i].reason_firing;
-			fin >> ppl[i].gratitude;
-			fin >> ppl[i].experience;
+		if (!file.is_open()) {
+			cerr << "Ошибка открытия файла people.txt" << endl;
+			return;
 		}
+
+		string line;
+		while (getline(file, line)) {
+			if (!line.empty()) {  // Игнорируем пустые строки
+				num_people++;
+			}
+		}
+		file.close();
+
+		// Второй проход: чтение данных
+		ppl = new People[num_people];
+		ifstream fin("people.txt");
+		if (!fin.is_open()) {
+			cerr << "Ошибка открытия файла people.txt" << endl;
+			delete[] ppl;  // Освобождаем память в случае ошибки
+			ppl = nullptr;
+			num_people = 0;
+			return;
+		}
+
+		for (int i = 0; i < num_people; i++) {
+			// Проверяем, достигли ли конца файла
+			if (fin.eof()) {
+				cerr << "Ошибка: файл содержит меньше записей, чем ожидалось" << endl;
+				break;
+			}
+
+			fin >> ppl[i].num
+				>> ppl[i].name
+				>> ppl[i].firstname
+				>> ppl[i].date_hiring
+				>> ppl[i].date_firing
+				>> ppl[i].reason_firing
+				>> ppl[i].gratitude
+				>> ppl[i].experience;
+
+			// Пропускаем оставшуюся часть строки (если есть)
+			fin.ignore();
+		}
+		fin.close();
 	};
 	void show() { // функция выводящая данные на экран консоли
 
@@ -134,42 +161,25 @@ public:
 		ppl[i + 1].experience = temp;
 	};
 
-	void add_people() { // функция добавляющая запись в файл
+	void add_people(string name,
+	string firstname,
+	string date_hiring,
+	string date_firing,
+	string reason_firing,
+	string gratitude,
+	string experience)
+	{ // функция добавляющая запись в файл
 		system("cls");
-		string name;
-		string firstname;
-		string date_hiring;
-		string date_firing;
-		string reason_firing;
-		string gratitude;
-		string experience;
-		cout << endl;
-		cout << "Введите имя работника" << endl;
-		cin >> name;
-		cout << "Введите фамилию" << endl;
-		cin >> firstname;
-		cout << "Дата принятия на работу" << endl;
-		cin >> date_hiring;
-		cout << "Дата увольнения" << endl;
-		cin >> date_firing;
-		cout << "Причина увольнения" << endl;
-		cin >> reason_firing;
-		cout << "Наличие благодарности за работу" << endl;
-		cin >> gratitude;
-		cout << "Стаж работы" << endl;
-		cin >> experience;
-		cout << "Запись добавлена успешно" << endl;
 		ofstream out("people.txt", ios::app);
 		out << endl << num_people + 1 << " " << name << " " << firstname << " " << date_hiring << " " << date_firing << " " << reason_firing << " " << gratitude << " " << experience;
 		out.close();
 	};
-	void del_people() { // функция удаляющая запись из файла
-		system("cls");
-		int num;
-		int check = 0;
+	
 
-		cout << endl << "Введите номер удаляемой записи:  ";
-		cin >> num;
+	void del_people(int num) { // функция удаляющая запись из файла
+		system("cls");
+		
+		int check = 0;
 		ofstream out("people.txt");
 		for (int i = 0; i < num_people; i++)
 			if (ppl[i].num != num)
@@ -182,10 +192,6 @@ public:
 			}
 			else
 				check = 1;
-		if (check == 0)
-			cout << endl << "Ошибка!!!" << endl;
-		else
-			cout << endl << "Запись удалена успешно!" << endl;
 
 		out.close();
 

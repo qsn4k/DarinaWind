@@ -1,6 +1,7 @@
 #pragma once
 
 #include "People.h"
+#include "AddForm.h"
 #include <msclr/marshal_cppstd.h>
 
 #using <System.dll>
@@ -12,13 +13,13 @@ using namespace System;
 using namespace System::Windows::Forms;
 using namespace System::Drawing;
 using namespace System::Data;
-using namespace msclr::interop;
 
-namespace EmployeeManager {
+namespace DarinaWind {
 
     public ref class Form1 : public Form
     {
     public:
+
         Form1(void)
         {
             InitializeComponent();
@@ -158,9 +159,9 @@ namespace EmployeeManager {
         }
 
         void btnAdd_Click(Object^ sender, EventArgs^ e) {
-            // Add implementation
-            MessageBox::Show(L"Функция добавления записи", L"Информация",
-                MessageBoxButtons::OK, MessageBoxIcon::Information);
+            People newPeople;
+            Form^ addForm = gcnew AddForm();
+            addForm->Show();
         }
 
         void btnDelete_Click(Object^ sender, EventArgs^ e) {
@@ -169,12 +170,9 @@ namespace EmployeeManager {
                 int selectedIndex = dataGridView->SelectedRows[0]->Index;
                 int numToDelete = Convert::ToInt32(dataGridView->Rows[selectedIndex]->Cells[0]->Value);
 
-                org->del_people();
+                org->del_people(numToDelete);
                 org->load();
                 UpdateDataGridView();
-
-                MessageBox::Show(L"Запись удалена!", L"Успех",
-                    MessageBoxButtons::OK, MessageBoxIcon::Information);
             }
             else
             {

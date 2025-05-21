@@ -5,6 +5,6 @@ int main()
 {
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
-    Application::Run(gcnew EmployeeManager::Form1());
+    Application::Run(gcnew DarinaWind::Form1());
     return 0;
 }
