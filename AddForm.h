@@ -160,21 +160,21 @@ namespace DarinaWind {
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(79, 20);
+			this->textBox1->Location = System::Drawing::Point(189, 20);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(100, 22);
 			this->textBox1->TabIndex = 8;
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(128, 43);
+			this->textBox2->Location = System::Drawing::Point(189, 45);
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(100, 22);
 			this->textBox2->TabIndex = 9;
 			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(161, 66);
+			this->textBox3->Location = System::Drawing::Point(189, 69);
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(100, 22);
 			this->textBox3->TabIndex = 10;
@@ -188,21 +188,21 @@ namespace DarinaWind {
 			// 
 			// textBox5
 			// 
-			this->textBox5->Location = System::Drawing::Point(116, 120);
+			this->textBox5->Location = System::Drawing::Point(189, 119);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(100, 22);
 			this->textBox5->TabIndex = 12;
 			// 
 			// textBox6
 			// 
-			this->textBox6->Location = System::Drawing::Point(177, 143);
+			this->textBox6->Location = System::Drawing::Point(189, 144);
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(100, 22);
 			this->textBox6->TabIndex = 13;
 			// 
 			// textBox7
 			// 
-			this->textBox7->Location = System::Drawing::Point(89, 170);
+			this->textBox7->Location = System::Drawing::Point(189, 169);
 			this->textBox7->Name = L"textBox7";
 			this->textBox7->Size = System::Drawing::Size(100, 22);
 			this->textBox7->TabIndex = 14;
@@ -223,6 +223,7 @@ namespace DarinaWind {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->ClientSize = System::Drawing::Size(625, 279);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox7);
